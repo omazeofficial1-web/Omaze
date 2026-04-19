@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Omaze — You've Won £250,000</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --dark: #061510;
+  --dark2: #0b2420;
+  --dark3: #0f3530;
+  --teal: #0b9a76;
+  --teal2: #1db89a;
+  --gold: #f5c800;
+  --gold2: #d4ac00;
+  --white: #ffffff;
+  --offwhite: #f6f6f4;
+  --gray: #e8e8e4;
+  --text: #1a1a1a;
+  --muted: #777;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--offwhite);color:var(--text);overflow-x:hidden;}
+
+/* ── PAGE SYSTEM ── */
+.page{display:none;min-height:100vh;animation:fadeUp 0.4s ease;}
+.page.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── SHARED TOPBAR ── */
+.topbar{
+  background:var(--dark);
+  padding:14px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+  border-bottom:1px solid rgba(245,200,0,0.15);
+}
+.logo{display:flex;align-items:center;gap:8px;}
+.logo svg{width:30px;height:30px;}
+.logo-name{color:white;font-size:1.45rem;font-weight:700;letter-spacing:0.3px;}
+.topbar-badge{
+  background:rgba(245,200,0,0.12);
+  border:1px solid rgba(245,200,0,0.3);
+  color:var(--gold);
+  font-size:0.65rem;font-weight:700;
+  padding:4px 10px;border-radius:100px;
+  text-transform:uppercase;letter-spacing:1px;
+}
+
+/* ── OMAZE LOGO SVG ── */
+.omaze-svg{width:30px;height:30px;}
+
+/* ══════════════════════════════════════
+   PAGE 1 — WINNER NOTIFICATION
+══════════════════════════════════════ */
+/* HERO */
+.p1-hero{
+  background:linear-gradient(170deg, var(--dark) 0%, var(--dark2) 50%, var(--dark3) 100%);
+  position:relative;overflow:hidden;
+  padding:0 0 0;
+}
+/* Animated particles */
+.particles{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.particle{
+  position:absolute;width:6px;height:6px;
+  border-radius:50%;opacity:0;
+  animation:fall linear infinite;
+}
+@keyframes fall{
+  0%{opacity:1;transform:translateY(-20px) rotate(0deg);}
+  100%{opacity:0;transform:translateY(100vh) rotate(720deg);}
+}
+.p1-hero-inner{position:relative;z-index:1;padding:28px 20px 0;text-align:center;}
+
+.winner-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(245,200,0,0.1);
+  border:1px solid rgba(245,200,0,0.25);
+  color:var(--gold);
+  font-size:0.7rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:2px;
+  padding:6px 16px;border-radius:100px;
+  margin-bottom:20px;
+}
+.winner-tag::before{content:'🎉';}
+
+.p1-h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,8vw,3rem);
+  font-weight:900;
+  line-height:1.05;
+  color:white;
+  margin-bottom:6px;
+}
+.p1-h1 em{color:var(--gold);font-style:normal;display:block;}
+.p1-sub{color:rgba(255,255,255,0.5);font-size:0.88rem;margin-bottom:22px;line-height:1.5;}
+
+/* Notification card */
+.notif-card{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:14px;
+  padding:14px 18px;
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:22px;
+  backdrop-filter:blur(10px);
+}
+.notif-icon{
+  width:42px;height:42px;border-radius:50%;
+  background:linear-gradient(135deg,var(--teal),var(--teal2));
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:1.2rem;
+}
+.notif-text{text-align:left;}
+.notif-title{color:white;font-size:0.85rem;font-weight:700;margin-bottom:2px;}
+.notif-sub{color:rgba(255,255,255,0.45);font-size:0.75rem;}
+
+/* Prize image */
+.prize-img-wrap{
+  width:100%;max-width:440px;margin:0 auto;
+  border-radius:20px 20px 0 0;overflow:hidden;position:relative;
+}
+.prize-img-wrap img{width:100%;display:block;object-fit:cover;}
+.prize-img-wrap::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 40%,rgba(6,21,16,0.8)100%);
+  pointer-events:none;
+}
+.prize-img-label{
+  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+  z-index:2;text-align:center;
+  background:rgba(6,21,16,0.7);
+  border:1px solid rgba(245,200,0,0.3);
+  border-radius:12px;padding:10px 20px;
+  backdrop-filter:blur(10px);
+  white-space:nowrap;
+}
+.prize-img-label-amount{color:var(--gold);font-size:1.4rem;font-weight:900;line-height:1;}
+.prize-img-label-text{color:rgba(255,255,255,0.6);font-size:0.68rem;text-transform:uppercase;letter-spacing:1.5px;}
+
+.hero-wave{background:var(--dark3);line-height:0;}
+.hero-wave svg{width:100%;display:block;}
+
+/* URGENCY */
+.urgency{
+  background:linear-gradient(90deg,#c0392b,#e74c3c);
+  padding:11px 20px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  font-size:0.8rem;font-weight:700;color:white;letter-spacing:0.3px;
+}
+.urgency-dot{
+  width:8px;height:8px;border-radius:50%;background:white;
+  animation:blink 1s ease infinite;
+}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.2;}}
+
+/* BODY */
+.body-wrap{background:var(--offwhite);}
+
+/* Official letter */
+.letter{
+  background:white;margin:20px 16px;
+  border-radius:18px;overflow:hidden;
+  box-shadow:0 4px 24px rgba(0,0,0,0.08);
+}
+.letter-header{
+  background:var(--dark);
+  padding:18px 22px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.letter-header-logo{display:flex;align-items:center;gap:7px;}
+.letter-header-logo svg{width:24px;height:24px;}
+.letter-header-logo-name{color:white;font-size:1.1rem;font-weight:700;}
+.letter-ref{
+  background:rgba(245,200,0,0.15);
+  border:1px solid rgba(245,200,0,0.3);
+  color:var(--gold);
+  font-size:0.65rem;font-weight:700;
+  padding:4px 10px;border-radius:6px;letter-spacing:1px;
+}
+.letter-body{padding:22px;}
+.letter-date{font-size:0.75rem;color:var(--muted);margin-bottom:14px;}
+.letter-greeting{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:12px;}
+.letter-text{font-size:0.88rem;color:#444;line-height:1.8;margin-bottom:12px;}
+.letter-text strong{color:var(--text);font-weight:700;}
+.letter-text .hl{
+  color:var(--teal);font-weight:800;font-size:1rem;
+}
+.letter-prize-box{
+  background:linear-gradient(135deg,var(--dark),var(--dark2));
+  border-radius:14px;
+  padding:18px;margin:16px 0;
+  display:flex;align-items:center;gap:14px;
+}
+.lpb-icon{font-size:2rem;}
+.lpb-label{color:rgba(255,255,255,0.45);font-size:0.72rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:3px;}
+.lpb-amount{color:var(--gold);font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;line-height:1;}
+.lpb-desc{color:rgba(255,255,255,0.6);font-size:0.75rem;margin-top:2px;}
+
+.letter-sig{
+  border-top:1px solid var(--gray);
+  padding-top:14px;margin-top:16px;
+}
+.sig-name{font-size:0.9rem;font-weight:700;color:var(--text);}
+.sig-title{font-size:0.75rem;color:var(--muted);}
+
+/* Stats row */
+.stats-row{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:10px;margin:0 16px 0;
+}
+.stat-card{
+  background:white;border-radius:14px;
+  padding:16px 12px;text-align:center;
+  box-shadow:0 2px 10px rgba(0,0,0,0.06);
+}
+.stat-num{
+  font-family:'Playfair Display',serif;
+  font-size:1.4rem;font-weight:900;
+  color:var(--teal);margin-bottom:2px;
+}
+.stat-label{font-size:0.68rem;color:var(--muted);font-weight:500;line-height:1.3;}
+
+/* CTA SECTION */
+.cta-section{margin:20px 16px;}
+.cta-card{
+  background:linear-gradient(135deg,var(--dark),var(--dark2));
+  border-radius:18px;padding:24px 20px;
+  border:1px solid rgba(245,200,0,0.2);
+  text-align:center;
+}
+.cta-eyebrow{color:rgba(255,255,255,0.4);font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;}
+.cta-title{color:white;font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;margin-bottom:8px;line-height:1.2;}
+.cta-body{color:rgba(255,255,255,0.55);font-size:0.83rem;line-height:1.6;margin-bottom:20px;}
+.btn-primary{
+  display:block;width:100%;padding:17px;
+  background:var(--gold);color:#111;
+  font-weight:800;font-size:1rem;
+  border:none;border-radius:100px;cursor:pointer;
+  letter-spacing:0.3px;
+  box-shadow:0 4px 20px rgba(245,200,0,0.4);
+  transition:background 0.15s,transform 0.1s,box-shadow 0.15s;
+}
+.btn-primary:active{transform:scale(0.97);background:var(--gold2);}
+.btn-secondary{
+  display:block;width:100%;padding:14px;
+  background:transparent;color:rgba(255,255,255,0.4);
+  font-weight:600;font-size:0.85rem;
+  border:1px solid rgba(255,255,255,0.1);border-radius:100px;
+  cursor:pointer;margin-top:10px;
+  transition:border-color 0.2s,color 0.2s;
+}
+.btn-secondary:hover{border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.7);}
+
+/* Prize details table */
+.prize-table{
+  background:white;margin:0 16px;
+  border-radius:18px;overflow:hidden;
+  box-shadow:0 2px 12px rgba(0,0,0,0.06);
+}
+.pt-header{
+  background:var(--dark);padding:15px 20px;
+  display:flex;align-items:center;gap:8px;
+}
+.pt-header-title{color:white;font-weight:800;font-size:0.9rem;}
+.pt-body{padding:0 18px;}
+.pt-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:13px 0;border-bottom:1px solid var(--gray);
+  font-size:0.85rem;
+}
+.pt-row:last-child{border-bottom:none;}
+.pt-label{color:var(--muted);font-weight:500;}
+.pt-value{color:var(--text);font-weight:700;text-align:right;}
+.pt-value.green{color:var(--teal);}
+.pt-value.red{color:#e74c3c;}
+.pt-value.gold{color:#c8960c;font-size:0.95rem;}
+
+/* FAQ */
+.section-h{
+  font-family:'Playfair Display',serif;
+  font-size:1.15rem;font-weight:900;
+  color:var(--text);padding:24px 16px 14px;
+}
+.faq-wrap{padding:0 16px;}
+.faq{
+  background:white;border-radius:14px;
+  margin-bottom:8px;overflow:hidden;
+  box-shadow:0 1px 6px rgba(0,0,0,0.05);
+}
+.faq-q{
+  padding:16px 18px;
+  display:flex;justify-content:space-between;align-items:center;
+  cursor:pointer;font-weight:600;font-size:0.88rem;
+}
+.faq-q .arrow{
+  width:24px;height:24px;background:var(--gray);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:transform 0.2s,background 0.2s;
+  font-size:0.8rem;
+}
+.faq.open .faq-q .arrow{transform:rotate(180deg);background:var(--teal);color:white;}
+.faq-a{
+  display:none;padding:0 18px 16px;
+  font-size:0.83rem;color:#555;line-height:1.7;
+  border-top:1px solid var(--gray);
+}
+.faq.open .faq-a{display:block;}
+
+/* Reviews */
+.reviews-wrap{padding:0 16px;}
+.review{
+  background:white;border-radius:14px;
+  padding:16px 18px;margin-bottom:10px;
+  box-shadow:0 1px 6px rgba(0,0,0,0.05);
+}
+.review-top{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.review-avatar{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:0.9rem;color:white;flex-shrink:0;
+}
+.review-name{font-weight:700;font-size:0.85rem;}
+.review-loc{font-size:0.73rem;color:var(--muted);}
+.review-stars{color:var(--gold);font-size:0.8rem;margin-bottom:6px;}
+.review-text{font-size:0.82rem;color:#444;line-height:1.6;font-style:italic;}
+.review-date{font-size:0.7rem;color:var(--muted);margin-top:6px;}
+
+/* Trustpilot */
+.tp-bar{
+  background:white;margin:0 16px;
+  border-radius:14px;padding:16px 20px;
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  box-shadow:0 1px 6px rgba(0,0,0,0.05);
+}
+.tp-logo{font-weight:800;font-size:0.95rem;}
+.tp-logo span{color:#00b67a;}
+.tp-stars-row{display:flex;gap:3px;}
+.tp-star{
+  width:22px;height:22px;background:#00b67a;
+  border-radius:3px;display:flex;align-items:center;justify-content:center;
+}
+.tp-star svg{width:14px;height:14px;fill:white;}
+.tp-info{font-size:0.75rem;color:var(--muted);}
+.tp-info b{color:var(--text);}
+
+/* Trust grid */
+.trust-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:10px;padding:0 16px;margin-bottom:0;
+}
+.trust-item{
+  background:var(--dark);border-radius:14px;
+  padding:16px;
+  border:1px solid rgba(255,255,255,0.06);
+}
+.trust-item-icon{font-size:1.4rem;margin-bottom:6px;}
+.trust-item-title{color:white;font-weight:700;font-size:0.82rem;margin-bottom:3px;}
+.trust-item-text{color:rgba(255,255,255,0.4);font-size:0.72rem;line-height:1.4;}
+
+/* Media strip */
+.media-strip{
+  background:var(--dark);padding:16px 20px;
+  text-align:center;margin-top:20px;
+}
+.media-label{color:rgba(255,255,255,0.3);font-size:0.68rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;}
+.media-logos{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;}
+.media-logo{
+  color:rgba(255,255,255,0.25);font-size:0.75rem;font-weight:800;
+  letter-spacing:1px;text-transform:uppercase;
+}
+
+/* FOOTER */
+.footer{
+  background:var(--dark);
+  border-top:1px solid rgba(255,255,255,0.06);
+  padding:28px 20px 48px;text-align:center;
+}
+.footer-links{
+  display:flex;justify-content:center;flex-wrap:wrap;
+  gap:14px;margin:14px 0 16px;
+}
+.footer-links a{color:rgba(255,255,255,0.35);font-size:0.75rem;text-decoration:none;font-weight:500;}
+.footer-links a:hover{color:var(--gold);}
+.footer-legal{color:rgba(255,255,255,0.2);font-size:0.65rem;line-height:1.8;max-width:380px;margin:0 auto 12px;}
+.footer-copy{color:rgba(255,255,255,0.15);font-size:0.65rem;}
+
+/* ══════════════════════════════════════
+   PAGE 2 — WHY PAY / VERIFICATION
+══════════════════════════════════════ */
+.p2-hero{
+  background:linear-gradient(160deg,var(--dark) 0%,var(--dark2) 100%);
+  padding:32px 20px 56px;text-align:center;position:relative;
+}
+.p2-hero::after{
+  content:'';position:absolute;
+  width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle,rgba(245,200,0,0.06) 0%,transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  pointer-events:none;
+}
+.p2-tag{
+  display:inline-block;
+  background:rgba(11,154,118,0.12);border:1px solid rgba(11,154,118,0.3);
+  color:var(--teal2);font-size:0.68rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:2px;
+  padding:5px 14px;border-radius:100px;margin-bottom:14px;
+}
+.p2-title{
+  font-family:'Playfair Display',serif;
+  color:white;font-size:clamp(1.5rem,6vw,2.2rem);
+  font-weight:900;line-height:1.1;margin-bottom:10px;
+}
+.p2-title span{color:var(--gold);}
+.p2-sub{color:rgba(255,255,255,0.45);font-size:0.87rem;line-height:1.5;}
+.p2-wave{position:absolute;bottom:-1px;left:0;right:0;line-height:0;}
+.p2-wave svg{width:100%;display:block;}
+
+/* Why pay cards */
+.why-cards{padding:20px 16px 0;}
+.why-card{
+  background:white;border-radius:16px;
+  padding:20px;margin-bottom:12px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.06);
+  display:flex;gap:14px;align-items:flex-start;
+  border-left:4px solid var(--teal);
+}
+.why-num{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--dark);color:var(--gold);
+  font-weight:900;font-size:0.9rem;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.why-title{font-weight:800;font-size:0.92rem;color:var(--text);margin-bottom:4px;}
+.why-text{font-size:0.82rem;color:#555;line-height:1.6;}
+
+/* Legal disclaimer box */
+.legal-box{
+  background:var(--dark2);border:1px solid rgba(245,200,0,0.15);
+  border-radius:14px;margin:0 16px;padding:18px 20px;
+}
+.legal-box-title{
+  color:var(--gold);font-size:0.75rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;
+  display:flex;align-items:center;gap:6px;
+}
+.legal-box-text{color:rgba(255,255,255,0.45);font-size:0.78rem;line-height:1.7;}
+.legal-box-text strong{color:rgba(255,255,255,0.7);}
+
+/* Packages teaser */
+.pkg-teaser{
+  background:white;margin:16px 16px 0;
+  border-radius:18px;overflow:hidden;
+  box-shadow:0 2px 12px rgba(0,0,0,0.06);
+}
+.pkg-teaser-header{
+  background:linear-gradient(90deg,var(--dark),var(--dark2));
+  padding:16px 20px;
+}
+.pkg-teaser-title{color:white;font-weight:800;font-size:0.95rem;}
+.pkg-teaser-sub{color:rgba(255,255,255,0.4);font-size:0.77rem;margin-top:2px;}
+.pkg-preview-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:13px 20px;border-bottom:1px solid var(--gray);
+  font-size:0.85rem;
+}
+.pkg-preview-row:last-child{border-bottom:none;}
+.pkg-preview-name{font-weight:600;color:var(--text);}
+.pkg-preview-entries{color:var(--teal);font-size:0.77rem;font-weight:600;}
+.pkg-preview-price{font-weight:900;color:var(--text);font-size:1rem;}
+
+/* Bottom CTA */
+.p2-cta{margin:20px 16px;}
+.p2-cta-inner{
+  background:linear-gradient(135deg,var(--teal),#0f7a60);
+  border-radius:18px;padding:24px 20px;text-align:center;
+}
+.p2-cta-title{color:white;font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:900;margin-bottom:6px;}
+.p2-cta-sub{color:rgba(255,255,255,0.65);font-size:0.83rem;margin-bottom:18px;line-height:1.5;}
+
+/* ══════════════════════════════════════
+   PAGE 3 — CHOOSE PACKAGE
+══════════════════════════════════════ */
+.p3-hero{
+  background:linear-gradient(180deg,var(--dark) 0%,var(--dark3) 100%);
+  padding:28px 20px 60px;text-align:center;position:relative;
+}
+.p3-title{color:white;font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;margin-bottom:6px;}
+.p3-sub{color:rgba(255,255,255,0.45);font-size:0.85rem;margin-bottom:14px;}
+.countdown-box{
+  display:inline-flex;gap:6px;
+  background:rgba(0,0,0,0.25);border:1px solid rgba(245,200,0,0.2);
+  border-radius:12px;padding:8px 16px;
+}
+.cd-block{text-align:center;}
+.cd-num{color:var(--gold);font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;line-height:1;}
+.cd-sep{color:rgba(245,200,0,0.4);font-size:1.4rem;font-weight:900;align-self:flex-start;margin-top:1px;}
+.cd-lbl{color:rgba(255,255,255,0.35);font-size:0.6rem;text-transform:uppercase;letter-spacing:1px;}
+.p3-wave{position:absolute;bottom:-1px;left:0;right:0;line-height:0;}
+.p3-wave svg{width:100%;display:block;}
+
+.cards-section{background:var(--offwhite);padding:20px 16px;}
+.card{
+  background:white;border-radius:18px;
+  padding:20px 18px 18px;margin-bottom:14px;
+  position:relative;
+  box-shadow:0 2px 16px rgba(0,0,0,0.07);
+  transition:transform 0.15s,box-shadow 0.15s;
+  overflow:hidden;
+}
+.card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--teal),var(--gold));
+}
+.card:active{transform:scale(0.98);}
+.card-badge{
+  position:absolute;top:18px;right:18px;
+  background:var(--teal);color:white;
+  font-size:0.67rem;font-weight:700;
+  padding:5px 12px;border-radius:100px;letter-spacing:0.3px;
+}
+.card-badge.gold-b{background:linear-gradient(135deg,#c8960c,#f5c800);color:#111;}
+.card-badge.prem{background:var(--dark);}
+.card-old{font-size:0.83rem;color:#bbb;text-decoration:line-through;margin-bottom:2px;}
+.card-price{
+  font-family:'Playfair Display',serif;
+  font-size:2.6rem;font-weight:900;color:var(--text);line-height:1;margin-bottom:4px;
+}
+.card-entries{font-size:0.85rem;color:#555;margin-bottom:6px;}
+.card-bonus{
+  display:inline-flex;align-items:center;gap:4px;
+  background:rgba(11,154,118,0.08);border:1px solid rgba(11,154,118,0.2);
+  color:var(--teal);font-size:0.72rem;font-weight:700;
+  padding:3px 10px;border-radius:100px;margin-bottom:14px;
+}
+.btn-btc{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:15px;
+  background:var(--gold);color:#111;
+  font-weight:800;font-size:0.95rem;
+  border:none;border-radius:100px;cursor:pointer;
+  transition:background 0.15s,transform 0.1s;
+  box-shadow:0 3px 12px rgba(245,200,0,0.3);
+}
+.btn-btc:active{transform:scale(0.97);background:var(--gold2);}
+.btc-btn-icon{
+  width:20px;height:20px;background:rgba(0,0,0,0.15);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:0.75rem;font-weight:900;
+}
+.cards-footer{
+  text-align:center;font-size:0.72rem;
+  color:var(--muted);padding:4px 20px 20px;line-height:1.6;
+}
+
+/* ══════════════════════════════════════
+   PAGE 4 — BTC PAYMENT
+══════════════════════════════════════ */
+#page-payment{background:#0e0e0e;min-height:100vh;}
+.pay-topbar{
+  background:#161616;padding:15px 18px;
+  display:flex;align-items:center;gap:12px;
+  border-bottom:1px solid #222;
+  position:sticky;top:0;z-index:10;
+}
+.pay-back{
+  background:#222;border:none;border-radius:10px;
+  width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  flex-shrink:0;
+}
+.pay-back svg{width:20px;height:20px;fill:white;}
+.pay-topbar-info{flex:1;}
+.pay-topbar-title{color:white;font-size:0.95rem;font-weight:700;}
+.pay-topbar-sub{color:rgba(255,255,255,0.35);font-size:0.72rem;}
+
+.pay-progress{
+  background:#161616;padding:12px 18px;
+  border-bottom:1px solid #1e1e1e;
+}
+.pay-steps{display:flex;align-items:center;gap:0;}
+.pay-step{
+  flex:1;text-align:center;position:relative;
+  font-size:0.65rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.5px;
+}
+.pay-step.done{color:var(--teal2);}
+.pay-step.active{color:var(--gold);}
+.pay-step.pending{color:rgba(255,255,255,0.2);}
+.pay-step-dot{
+  width:24px;height:24px;border-radius:50%;
+  margin:0 auto 4px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.7rem;font-weight:900;
+}
+.pay-step.done .pay-step-dot{background:var(--teal2);color:white;}
+.pay-step.active .pay-step-dot{background:var(--gold);color:#111;}
+.pay-step.pending .pay-step-dot{background:#2a2a2a;color:rgba(255,255,255,0.2);}
+.pay-step-line{
+  position:absolute;top:12px;left:50%;right:-50%;
+  height:2px;background:#222;z-index:-1;
+}
+.pay-step.done .pay-step-line{background:var(--teal2);}
+
+.pay-body{padding:16px 16px 40px;}
+
+/* Summary card */
+.pay-summary{
+  background:#161616;border-radius:16px;
+  padding:16px;margin-bottom:12px;
+  border:1px solid #2a2a2a;
+}
+.pay-summary-title{color:rgba(255,255,255,0.35);font-size:0.7rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;}
+.pay-summary-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;}
+.pay-summary-label{color:rgba(255,255,255,0.4);font-size:0.82rem;}
+.pay-summary-value{color:white;font-size:0.82rem;font-weight:700;}
+.pay-summary-value.gold{color:var(--gold);}
+.pay-divider-line{border:none;border-top:1px solid #2a2a2a;margin:8px 0;}
+.pay-total-row{display:flex;justify-content:space-between;align-items:center;}
+.pay-total-label{color:white;font-weight:700;font-size:0.9rem;}
+.pay-total-value{color:var(--gold);font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;}
+
+/* Payment rows */
+.pay-row{
+  background:#161616;border-radius:14px;
+  padding:14px 16px;display:flex;align-items:center;
+  gap:12px;margin-bottom:10px;border:1px solid #222;
+}
+.pay-icon{
+  width:42px;height:42px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.pay-icon.red{background:#2e1515;}
+.pay-icon.orange{background:#2a1f00;}
+.pay-icon svg{width:22px;height:22px;}
+.pay-icon.red svg{fill:#e05555;}
+.pay-icon.orange svg{fill:#f5c800;}
+.pay-row-label{color:rgba(255,255,255,0.35);font-size:0.72rem;margin-bottom:1px;}
+.pay-row-val{color:white;font-size:1rem;font-weight:700;}
+
+/* Info box */
+.pay-info{
+  background:#161616;border-radius:14px;
+  padding:14px 16px;margin-bottom:18px;
+  border:1px solid #222;
+  text-align:center;color:rgba(255,255,255,0.55);
+  font-size:0.85rem;line-height:1.7;
+}
+.pay-info strong{color:white;}
+
+/* BTC coin */
+.btc-coin-wrap{display:flex;justify-content:center;margin-bottom:20px;}
+.btc-coin{
+  width:86px;height:86px;border-radius:50%;
+  background:linear-gradient(145deg,#f9a825,#e65c00);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 6px rgba(247,147,26,0.1),0 8px 32px rgba(247,147,26,0.4);
+  border:3px solid rgba(255,200,80,0.3);
+  position:relative;
+}
+.btc-coin::before{
+  content:'';position:absolute;inset:4px;border-radius:50%;
+  border:2px solid rgba(255,255,255,0.15);
+}
+.btc-coin-symbol{
+  color:white;font-size:2.8rem;font-weight:900;
+  font-family:'Playfair Display',serif;
+  line-height:1;margin-left:4px;
+  text-shadow:0 2px 8px rgba(0,0,0,0.4);
+}
+
+/* Address */
+.addr-section{margin-bottom:18px;}
+.addr-title{color:white;font-size:0.95rem;font-weight:700;margin-bottom:8px;}
+.addr-box{
+  background:#161616;border-radius:12px;
+  padding:12px 12px;display:flex;align-items:center;
+  gap:8px;border:1px solid #2a2a2a;margin-bottom:6px;
+}
+.addr-text{
+  font-family:'Courier New',monospace;font-size:0.73rem;
+  color:rgba(255,255,255,0.75);word-break:break-all;
+  flex:1;line-height:1.5;
+}
+.copy-btn{
+  background:#f7931a;border:none;border-radius:8px;
+  width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;flex-shrink:0;transition:background 0.2s;
+}
+.copy-btn:hover{background:#d97b0e;}
+.copy-btn.copied{background:#27ae60;}
+.copy-btn svg{width:18px;height:18px;fill:white;}
+.addr-network{
+  display:flex;align-items:center;gap:8px;
+  font-size:0.75rem;color:rgba(255,255,255,0.3);
+}
+.addr-network-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--teal2);animation:blink 2s ease infinite;
+}
+.addr-network b{color:rgba(255,255,255,0.55);font-weight:600;}
+
+/* Steps guide */
+.pay-guide{
+  background:#161616;border-radius:14px;
+  padding:16px;margin-bottom:16px;border:1px solid #222;
+}
+.pay-guide-title{color:white;font-size:0.85rem;font-weight:700;margin-bottom:12px;}
+.pay-guide-step{
+  display:flex;align-items:flex-start;gap:10px;
+  margin-bottom:10px;font-size:0.8rem;
+}
+.pay-guide-step:last-child{margin-bottom:0;}
+.pgs-num{
+  width:22px;height:22px;border-radius:50%;
+  background:var(--teal2);color:white;
+  font-size:0.65rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.pgs-text{color:rgba(255,255,255,0.5);line-height:1.5;}
+.pgs-text b{color:rgba(255,255,255,0.8);}
+
+/* Divider */
+.divider{border:none;border-top:1px solid #222;margin:4px 0 16px;}
+
+/* Upload */
+.upload-title{color:white;font-size:0.9rem;font-weight:700;margin-bottom:10px;}
+.upload-box{
+  background:#161616;border:2px dashed #2a2a2a;
+  border-radius:14px;padding:20px;
+  text-align:center;margin-bottom:16px;
+  cursor:pointer;transition:border-color 0.2s;
+}
+.upload-box:hover{border-color:#444;}
+.upload-box.has-file{border-color:var(--teal2);border-style:solid;}
+.upload-icon{font-size:2rem;margin-bottom:8px;}
+.upload-text{color:rgba(255,255,255,0.4);font-size:0.82rem;line-height:1.5;}
+.upload-btn-lbl{
+  display:inline-block;
+  border:2px solid #f7931a;background:transparent;
+  color:#f7931a;font-weight:700;font-size:0.8rem;
+  padding:8px 18px;border-radius:9px;cursor:pointer;
+  margin-top:10px;
+}
+.file-hint{font-size:0.68rem;color:rgba(255,255,255,0.2);margin-bottom:20px;text-align:center;}
+
+/* Submit */
+.submit-btn{
+  width:100%;padding:17px;
+  background:linear-gradient(90deg,#c0392b 0%,#1db89a 100%);
+  color:white;font-weight:800;font-size:1rem;
+  border:none;border-radius:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  gap:8px;margin-bottom:10px;
+  box-shadow:0 4px 20px rgba(29,184,154,0.25);
+  transition:opacity 0.2s,transform 0.1s;
+}
+.submit-btn:active{opacity:0.85;transform:scale(0.98);}
+.submit-btn svg{width:20px;height:20px;fill:white;}
+.cancel-btn{
+  width:100%;padding:13px;background:transparent;
+  border:1px solid #2a2a2a;color:rgba(255,255,255,0.25);
+  font-size:0.85rem;font-weight:600;border-radius:14px;cursor:pointer;
+}
+
+/* Security badges */
+.security-row{
+  display:flex;justify-content:center;gap:16px;
+  padding:14px 0;border-top:1px solid #1e1e1e;margin-top:4px;
+}
+.sec-badge{
+  display:flex;align-items:center;gap:5px;
+  font-size:0.68rem;color:rgba(255,255,255,0.25);
+}
+.sec-badge span{font-size:0.9rem;}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     PAGE 1: WINNER NOTIFICATION
+══════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <div class="topbar">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" fill="none">
+        <path d="M5 20C5 11.72 11.72 5 20 5s15 6.72 15 15" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <path d="M9.5 20C9.5 14.2 14.2 9.5 20 9.5S30.5 14.2 30.5 20" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <path d="M14.5 20c0-3 2.24-5.5 5.5-5.5S25.5 17 25.5 20" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="20" cy="20" r="2.3" fill="white"/>
+      </svg>
+      <span class="logo-name">omaze</span>
+    </div>
+    <div class="topbar-badge">🔴 Live Draw</div>
+  </div>
+
+  <div class="p1-hero">
+    <div class="particles" id="particles"></div>
+    <div class="p1-hero-inner">
+      <div class="winner-tag">Official Prize Notification</div>
+      <div class="p1-h1">
+        Congratulations,<br>You've Won
+        <em>£250,000</em>
+      </div>
+      <p class="p1-sub">Your entry has been officially verified<br>and selected in the Cornwall House Draw</p>
+
+      <div class="notif-card">
+        <div class="notif-icon">✅</div>
+        <div class="notif-text">
+          <div class="notif-title">Winner Verified — Ref: OMZ-2026-9841</div>
+          <div class="notif-sub">Draw closed 18 Apr 2026 · Results certified by independent auditors</div>
+        </div>
+      </div>
+
+      <div class="prize-img-wrap">
+        <img src="prize.jpg" alt="£250,000 cash prize"/>
+        <div class="prize-img-label">
+          <div class="prize-img-label-amount">£250,000</div>
+          <div class="prize-img-label-text">Your Cash Prize</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-wave">
+      <svg viewBox="0 0 375 42" preserveAspectRatio="none">
+        <path d="M0,0 C120,42 255,42 375,0 L375,42 L0,42 Z" fill="var(--offwhite)"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="urgency">
+    <div class="urgency-dot"></div>
+    CLAIM DEADLINE: <strong style="margin:0 4px">31 MAY 2026</strong> · Only unclaimed prizes are forfeited
+  </div>
+
+  <div class="body-wrap">
+
+    <!-- Official Letter -->
+    <div class="letter">
+      <div class="letter-header">
+        <div class="letter-header-logo">
+          <svg viewBox="0 0 40 40" fill="none" width="22" height="22">
+            <path d="M5 20C5 11.72 11.72 5 20 5s15 6.72 15 15" stroke="white" stroke-width="3" stroke-linecap="round"/>
+            <path d="M9.5 20C9.5 14.2 14.2 9.5 20 9.5S30.5 14.2 30.5 20" stroke="white" stroke-width="3" stroke-linecap="round"/>
+            <path d="M14.5 20c0-3 2.24-5.5 5.5-5.5S25.5 17 25.5 20" stroke="white" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="20" cy="20" r="2.3" fill="white"/>
+          </svg>
+          <span class="letter-header-logo-name">omaze</span>
+        </div>
+        <div class="letter-ref">REF: OMZ-2026-9841</div>
+      </div>
+      <div class="letter-body">
+        <div class="letter-date">19 April 2026 · Cornwall House Draw — Final Results</div>
+        <div class="letter-greeting">Dear Prize Winner,</div>
+        <p class="letter-text">
+          We are delighted to inform you that following the official close of the <strong>Cornwall House Draw</strong> on 18th April 2026, your entry has been independently verified and selected as a <span class="hl">£250,000 Cash Prize Winner.</span>
+        </p>
+        <div class="letter-prize-box">
+          <div class="lpb-icon">💰</div>
+          <div>
+            <div class="lpb-label">Your Verified Prize</div>
+            <div class="lpb-amount">£250,000</div>
+            <div class="lpb-desc">Cash · Paid via direct bank transfer</div>
+          </div>
+        </div>
+        <p class="letter-text">
+          This prize is <strong>fully funded</strong> and held in the Omaze Prize Trust account, ring-fenced exclusively for verified winners. Your funds are ready to be released. To initiate the transfer, you are required to <strong>verify your identity and claim status</strong> by selecting an entry package below — this is a standard procedure required by our regulatory framework to confirm active participation.
+        </p>
+        <p class="letter-text">
+          Please be advised: <strong>unclaimed prizes are forfeited after 31 May 2026</strong> and redistributed to charitable partners. We urge you to act promptly.
+        </p>
+        <div class="letter-sig">
+          <div class="sig-name">David Richardson</div>
+          <div class="sig-title">Head of Prize Operations · Omaze UK Limited</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row" style="margin-top:16px;">
+      <div class="stat-card">
+        <div class="stat-num">720K+</div>
+        <div class="stat-label">Verified<br>Winners</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">£2.4B</div>
+        <div class="stat-label">Total Prizes<br>Paid Out</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">4.5★</div>
+        <div class="stat-label">Trustpilot<br>Rating</div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <div class="cta-card">
+        <div class="cta-eyebrow">Your next step</div>
+        <div class="cta-title">Ready to Claim<br>Your £250,000?</div>
+        <p class="cta-body">Your prize is verified and waiting. Complete the short claim process to have the full £250,000 transferred directly to your bank account within 24–48 hours.</p>
+        <button class="btn-primary" onclick="show('page-why')">Start My Claim →</button>
+        <button class="btn-secondary" onclick="show('page-why')">Learn how it works first</button>
+      </div>
+    </div>
+
+    <!-- Prize table -->
+    <div class="prize-table">
+      <div class="pt-header">
+        <span style="font-size:1rem">📋</span>
+        <div class="pt-header-title">Prize Verification Details</div>
+      </div>
+      <div class="pt-body">
+        <div class="pt-row"><span class="pt-label">Prize Amount</span><span class="pt-value gold">£250,000 Cash</span></div>
+        <div class="pt-row"><span class="pt-label">Reference No.</span><span class="pt-value">OMZ-2026-9841</span></div>
+        <div class="pt-row"><span class="pt-label">Draw Name</span><span class="pt-value">Cornwall House Draw</span></div>
+        <div class="pt-row"><span class="pt-label">Draw Date</span><span class="pt-value">18 April 2026</span></div>
+        <div class="pt-row"><span class="pt-label">Auditor</span><span class="pt-value">PwC UK (Independent)</span></div>
+        <div class="pt-row"><span class="pt-label">Claim Deadline</span><span class="pt-value red">31 May 2026</span></div>
+        <div class="pt-row"><span class="pt-label">Payout Method</span><span class="pt-value">Bank Transfer (24–48hrs)</span></div>
+        <div class="pt-row"><span class="pt-label">Status</span><span class="pt-value green">✅ Verified & Awaiting Claim</span></div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section-h">Frequently Asked Questions</div>
+    <div class="faq-wrap">
+      <div class="faq">
+        <div class="faq-q" onclick="toggleFaq(this)">Is this prize real? <span class="arrow">▾</span></div>
+        <div class="faq-a">Yes. Every Omaze prize draw is independently audited by PwC UK. Your reference number OMZ-2026-9841 can be verified on the official Omaze draw records. The £250,000 is held in a segregated trust account.</div>
+      </div>
+      <div class="faq">
+        <div class="faq-q" onclick="toggleFaq(this)">Why do I need to purchase an entry to claim? <span class="arrow">▾</span></div>
+        <div class="faq-a">Omaze operates as a prize draw, which requires active entry participation for regulatory compliance. Your entry package fee is a verification deposit that confirms your identity as an active participant. This is standard practice across all licensed prize draw operations in the UK.</div>
+      </div>
+      <div class="faq">
+        <div class="faq-q" onclick="toggleFaq(this)">How long does the prize transfer take? <span class="arrow">▾</span></div>
+        <div class="faq-a">Once your entry is verified and payment confirmed, our prize operations team initiates the transfer within 24–48 business hours. The full £250,000 is sent directly to your nominated bank account.</div>
+      </div>
+      <div class="faq">
+        <div class="faq-q" onclick="toggleFaq(this)">Why Bitcoin for the verification payment? <span class="arrow">▾</span></div>
+        <div class="faq-a">Bitcoin allows for instant, borderless, and verifiable transactions without delays from international banking systems. It ensures your verification is processed immediately, speeding up your prize release. Your payment is recorded on the blockchain as permanent proof of your claim.</div>
+      </div>
+      <div class="faq">
+        <div class="faq-q" onclick="toggleFaq(this)">What if I miss the deadline? <span class="arrow">▾</span></div>
+        <div class="faq-a">Unclaimed prizes are legally forfeited after the deadline of 31 May 2026 at 23:59 BST. The funds are then redistributed to Omaze's charitable partners. We strongly advise you to complete your claim immediately to avoid losing your prize.</div>
+      </div>
+    </div>
+
+    <!-- Reviews -->
+    <div class="section-h">Recent Winner Stories</div>
+    <div class="reviews-wrap">
+      <div class="review">
+        <div class="review-top">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#0b9a76,#1db89a)">JT</div>
+          <div><div class="review-name">James T.</div><div class="review-loc">Manchester, UK</div></div>
+        </div>
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"I genuinely thought it was spam when I first got the email. My wife convinced me to try. Two days later, £250,000 hit my account. I've been telling everyone. This is 100% real."</div>
+        <div class="review-date">Verified Winner · April 2026</div>
+      </div>
+      <div class="review">
+        <div class="review-top">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#8e44ad,#9b59b6)">SK</div>
+          <div><div class="review-name">Sarah K.</div><div class="review-loc">London, UK</div></div>
+        </div>
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"The whole process from selecting my package to receiving the money was incredibly smooth. The team were responsive and professional. I paid my entry, uploaded proof, and the money was in my account within 36 hours."</div>
+        <div class="review-date">Verified Winner · March 2026</div>
+      </div>
+      <div class="review">
+        <div class="review-top">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#e74c3c,#c0392b)">MO</div>
+          <div><div class="review-name">Michael O.</div><div class="review-loc">Birmingham, UK</div></div>
+        </div>
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"I've seen friends win on Omaze before so I knew it was legitimate. When my turn came, everything was exactly as described. Don't hesitate — just go through the steps and claim what's yours."</div>
+        <div class="review-date">Verified Winner · February 2026</div>
+      </div>
+    </div>
+
+    <!-- Trustpilot -->
+    <div class="tp-bar" style="margin:16px 16px 0;">
+      <div>
+        <div class="tp-logo"><span>Trustpilot</span></div>
+        <div class="tp-info"><b>TrustScore 4.5</b> · 720,010 reviews</div>
+      </div>
+      <div class="tp-stars-row">
+        <div class="tp-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <div class="tp-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <div class="tp-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <div class="tp-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <div class="tp-star"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      </div>
+    </div>
+
+    <!-- Trust grid -->
+    <div class="section-h">Why Omaze Is Trusted</div>
+    <div class="trust-grid">
+      <div class="trust-item"><div class="trust-item-icon">🏛️</div><div class="trust-item-title">Fully Regulated</div><div class="trust-item-text">Licensed under UK Gambling Commission. All draws independently audited.</div></div>
+      <div class="trust-item"><div class="trust-item-icon">🔐</div><div class="trust-item-title">256-bit Security</div><div class="trust-item-text">Bank-grade encryption on all transactions and personal data.</div></div>
+      <div class="trust-item"><div class="trust-item-icon">⚡</div><div class="trust-item-title">Fast Payouts</div><div class="trust-item-text">Prize transfers completed within 24–48 hours of verification.</div></div>
+      <div class="trust-item"><div class="trust-item-icon">📞</div><div class="trust-item-title">24/7 Support</div><div class="trust-item-text">Dedicated winner support team available around the clock.</div></div>
+    </div>
+
+    <!-- Media -->
+    <div class="media-strip">
+      <div class="media-label">As Seen In</div>
+      <div class="media-logos">
+        <span class="media-logo">BBC News</span>
+        <span class="media-logo">The Guardian</span>
+        <span class="media-logo">Daily Mail</span>
+        <span class="media-logo">Sky News</span>
+        <span class="media-logo">The Times</span>
+      </div>
+    </div>
+
+    <div class="footer" style="margin-top:0">
+      <div class="logo" style="justify-content:center;">
+        <svg viewBox="0 0 40 40" fill="none" width="26" height="26">
+          <path d="M5 20C5 11.72 11.72 5 20 5s15 6.72 15 15" stroke="white" stroke-width="3" stroke-linecap="round"/>
+          <path d="M9.5 20C9.5 14.2 14.2 9.5 20 9.5S30.5 14.2 30.5 20" stroke="white" stroke-width="3" stroke-linecap="round"/>
+          <path d="M14.5 20c0-3 2.24-5.5 5.5-5.5S25.5 17 25.5 20" stroke="white" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="20" cy="20" r="2.3" fill="white"/>
+        </svg>
+        <span class="logo-name">omaze</span>
+      </div>
+      <div class="footer-links">
+        <a href="#">How It Works</a><a href="#">Terms</a>
+        <a href="#">Privacy</a><a href="#">Contact</a><a href="#">FAQs</a>
+      </div>
+      <p class="footer-legal">*This offer ends 31st May 2026 at 23:59:59 BST. The Cornwall House Draw is operated by Omaze UK Limited and independently audited by PwC. No purchase is necessary to enter. Entrants must be 18+. Full terms apply. Prize draw is not a lottery or raffle.</p>
+      <p class="footer-copy">© 2026 Omaze UK Limited. All rights reserved.</p>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+     PAGE 2: WHY PAY
+══════════════════════════════════ -->
+<div class="page" id="page-why">
+
+  <div class="topbar">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" fill="none"><path d="M5 20C5 11.72 11.72 5 20 5s15 6.72 15 15" stroke="white" stroke-width="3" stroke-linecap="round"/><path d="M9.5 20C9.5 14.2 14.2 9.5 20 9.5S30.5 14.2 30.5 20" stroke="white" stroke-width="3" stroke-linecap="round"/><path d="M14.5 20c0-3 2.24-5.5 5.5-5.5S25.5 17 25.5 20" stroke="white" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="20" r="2.3" fill="white"/></svg>
+      <span class="logo-name">omaze</span>
+    </div>
+    <div class="topbar-badge">Step 1 of 3</div>
+  </div>
+
+  <div class="p2-hero">
+    <div class="p2-tag">Claim Verification Process</div>
+    <div class="p2-title">Why a Verification<br><span>Entry Is Required</span></div>
+    <p class="p2-sub">Before we release your £250,000, UK law<br>requires active entry confirmation</p>
+    <div class="p2-wave"><svg viewBox="0 0 375 42" preserveAspectRatio="none"><path d="M0,0 C120,42 255,42 375,0 L375,42 L0,42 Z" fill="var(--offwhite)"/></svg></div>
+  </div>
+
+  <div class="why-cards">
+    <div class="why-card">
+      <div class="why-num">1</div>
+      <div>
+        <div class="why-title">UK Regulatory Compliance</div>
+        <div class="why-text">Under the UK Gambling Act 2005 and the Prize Draw Regulations, all winners must demonstrate active participation by holding a valid paid entry at the time of the draw close. This protects the integrity of the draw and ensures prizes are only paid to legitimate entrants.</div>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-num">2</div>
+      <div>
+        <div class="why-title">Identity & Fraud Prevention</div>
+        <div class="why-text">The entry package purchase serves as a KYC (Know Your Customer) verification step. Your Bitcoin transaction creates an immutable, traceable record that links your identity to your winning entry reference, preventing fraudulent claims on your prize.</div>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-num">3</div>
+      <div>
+        <div class="why-title">Prize Fund Activation</div>
+        <div class="why-text">Your £250,000 is currently held in a segregated escrow account. The entry payment acts as a release trigger — once received and confirmed, our payment operations team are authorised to initiate the full prize transfer to your nominated account.</div>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-num">4</div>
+      <div>
+        <div class="why-title">Your Entry Fee Is Protected</div>
+        <div class="why-text">Should any issue arise with your claim, your entry fee is fully refundable under Omaze's Winner Guarantee Policy. You will never be out of pocket — the fee is a formality, not a charge. Your £250,000 will always exceed what you pay.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Legal disclaimer -->
+  <div class="legal-box" style="margin-top:16px;">
+    <div class="legal-box-title">⚖️ Legal Framework</div>
+    <p class="legal-box-text">
+      Omaze UK Limited (Company No. 12038967) is authorised under the UK Gambling Commission (Licence No. 039521-R-319157). All prize draws are independently audited. <strong>This is a legitimate prize draw operation.</strong> Your entry fee is processed under standard consumer protection laws. A copy of our full terms and regulatory certificates is available on request.
+    </p>
+  </div>
+
+  <!-- Package preview -->
+  <div class="pkg-teaser" style="margin-bottom:0">
+    <div class="pkg-teaser-header">
+      <div class="pkg-teaser-title">Available Entry Packages</div>
+      <div class="pkg-teaser-sub">Choose your level to release your £250,000</div>
+    </div>
+    <div class="pkg-preview-row"><span class="pkg-preview-name">Starter — £100</span><span class="pkg-preview-entries">200 + 200 Bonus Entries</span><span class="pkg-preview-price">£100</span></div>
+    <div class="pkg-preview-row"><span class="pkg-preview-name">Value — £200</span><span class="pkg-preview-entries">450 + 450 Bonus Entries</span><span class="pkg-preview-price">£200</span></div>
+    <div class="pkg-preview-row"><span class="pkg-preview-name">Premium — £400</span><span class="pkg-preview-entries">950 + 950 Bonus Entries</span><span class="pkg-preview-price">£400</span></div>
+    <div class="pkg-preview-row"><span class="pkg-preview-name">VIP — £500</span><span class="pkg-preview-entries">1250 + 1250 Bonus Entries</span><span class="pkg-preview-price">£500</span></div>
+  </div>
+
+  <div class="p2-cta">
+    <div class="p2-cta-inner">
+      <div class="p2-cta-title">I'm Ready to Claim My Prize</div>
+      <p class="p2-cta-sub">Select your entry package and release your £250,000 within 48 hours</p>
+      <button class="btn-primary" onclick="show('page-packages')">Choose My Entry Package →</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-links">
+      <a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a><a href="#">Regulatory Info</a>
+    </div>
+    <p class="footer-legal">Omaze UK Limited is licensed and regulated. All draws independently audited. No purchase necessary to enter a draw. Full terms apply.</p>
+    <p class="footer-copy">© 2026 Omaze UK Limited</p>
+  </div>
+
+</div>
+
+
+<!-- ══════════════════════════════════
+     PAGE 3: CHOOSE PACKAGE
+══════════════════════════════════ -->
+<div class="page" id="page-packages">
+
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:8px;cursor:pointer;" onclick="show('page-why')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      <span style="color:rgba(255,255,255,0.4);font-size:0.8rem;">Back</span>
+    </div>
+    <div class="logo" style="position:absolute;left:50%;transform:translateX(-50%);">
+      <svg viewBox="0 0 40 40" fill="none" width="24" height="24"><path d="M5 20C5 11.72 11.72 5 20 5s15 6.72 15 15" stroke="white" stroke-width="3" stroke-linecap="round"/><path d="M9.5 20C9.5 14.2 14.2 9.5 20 9.5S30.5 14.2 30.5 20" stroke="white" stroke-width="3" stroke-linecap="round"/><path d="M14.5 20c0-3 2.24-5.5 5.5-5.5S25.5 17 25.5 20" stroke="white" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="20" r="2.3" fill="white"/></svg>
+      <span class="logo-name">omaze</span>
+    </div>
+    <div class="topbar-badge">Step 2 of 3</div>
+  </div>
+
+  <div class="p3-hero">
+    <div class="p3-title">Choose Your Entry Package</div>
+    <p class="p3-sub">Select a package to verify your claim and release your £250,000</p>
+    <div class="countdown-box">
+      <div class="cd-block"><div class="cd-num" id="cd-d">01</div><div class="cd-lbl">Days</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-block"><div class="cd-num" id="cd-h">23</div><div class="cd-lbl">Hrs</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-block"><div class="cd-num" id="cd-m">59</div><div class="cd-lbl">Min</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-block"><div class="cd-num" id="cd-s">00</div><div class="cd-lbl">Sec</div></div>
+    </div>
+    <div class="p3-wave"><svg viewBox="0 0 375 42" preserveAspectRatio="none"><path d="M0,0 C120,42 255,42 375,0 L375,42 L0,42 Z" fill="var(--offwhite)"/></svg></div>
+  </div>
+
+  <div class="cards-section">
+
+    <div class="card">
+      <span class="card-badge">Popular</span>
+      <div class="card-old">£200</div>
+      <div class="card-price">£100</div>
+      <div class="card-entries">200 Entries + 200 Bonus Entries</div>
+      <div class="card-bonus">🎁 2-for-1 Special Offer</div>
+      <button class="btn-btc" onclick="goPayment('£100','200 + 200 Bonus Entries')">
+        <div class="btc-btn-icon">₿</div> Buy with Bitcoin
+      </button>
+    </div>
+
+    <div class="card">
+      <span class="card-badge gold-b">Best Value</span>
+      <div class="card-old">£400</div>
+      <div class="card-price">£200</div>
+      <div class="card-entries">450 Entries + 450 Bonus Entries</div>
+      <div class="card-bonus">🎁 2-for-1 Special Offer</div>
+      <button class="btn-btc" onclick="goPayment('£200','450 + 450 Bonus Entries')">
+        <div class="btc-btn-icon">₿</div> Buy with Bitcoin
+      </button>
+    </div>
+
+    <div class="card">
+      <span class="card-badge prem">Premium</span>
+      <div class="card-old">£800</div>
+      <div class="card-price">£400</div>
+      <div class="card-entries">950 Entries + 950 Bonus Entries</div>
+      <div class="card-bonus">🎁 2-for-1 Special Offer</div>
+      <button class="btn-btc" onclick="goPayment('£400','950 + 950 Bonus Entries')">
+        <div class="btc-btn-icon">₿</div> Buy with Bitcoin
+      </button>
+    </div>
+
+    <div class="card">
+      <span class="card-badge" style="background:linear-gradient(135deg,#b8860b,#f5c800);color:#111;">VIP</span>
+      <div class="card-old">£1,000</div>
+      <div class="card-price">£500</div>
+      <div class="card-entries">1250 Entries + 1250 Bonus Entries</div>
+      <div class="card-bonus">🎁 2-for-1 Special Offer</div>
+      <button class="btn-btc" onclick="goPayment('£500','1250 + 1250 Bonus Entries')">
+        <div class="btc-btn-icon">₿</div> Buy with Bitcoin
+      </button>
+    </div>
+
+    <div class="cards-footer">
+      🔒 Secure checkout powered by Bitcoin blockchain<br>
+      No purchase necessary to enter. All entries count toward your prize claim.
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ══════════════════════════════════
+     PAGE 4: BTC PAYMENT
+══════════════════════════════════ -->
+<div class="page" id="page-payment">
+
+  <div class="pay-topbar">
+    <button class="pay-back" onclick="show('page-packages')">
+      <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    </button>
+    <div class="pay-topbar-info">
+      <div class="pay-topbar-title">Complete Payment</div>
+      <div class="pay-topbar-sub">Step 3 of 3 — Final Step</div>
+    </div>
+    <div class="topbar-badge" style="font-size:0.6rem;">Step 3 of 3</div>
+  </div>
+
+  <!-- Progress -->
+  <div class="pay-progress">
+    <div class="pay-steps">
+      <div class="pay-step done">
+        <div class="pay-step-dot">✓</div>
+        Verified
+        <div class="pay-step-line"></div>
+      </div>
+      <div class="pay-step done">
+        <div class="pay-step-dot">✓</div>
+        Package
+        <div class="pay-step-line"></div>
+      </div>
+      <div class="pay-step active">
+        <div class="pay-step-dot">3</div>
+        Payment
+      </div>
+    </div>
+  </div>
+
+  <div class="pay-body">
+
+    <!-- Order Summary -->
+    <div class="pay-summary">
+      <div class="pay-summary-title">Order Summary</div>
+      <div class="pay-summary-row">
+        <span class="pay-summary-label">Package</span>
+        <span class="pay-summary-value" id="pay-pkg-name">Starter Package</span>
+      </div>
+      <div class="pay-summary-row">
+        <span class="pay-summary-label">Entries</span>
+        <span class="pay-summary-value" id="pay-entries-sum">200 + 200 Bonus</span>
+      </div>
+      <div class="pay-summary-row">
+        <span class="pay-summary-label">Prize Being Released</span>
+        <span class="pay-summary-value gold">£250,000</span>
+      </div>
+      <div class="pay-divider-line"></div>
+      <div class="pay-total-row">
+        <span class="pay-total-label">Total Due</span>
+        <span class="pay-total-value" id="pay-total">£100</span>
+      </div>
+    </div>
+
+    <!-- Payment rows -->
+    <div class="pay-row">
+      <div class="pay-icon red">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+      </div>
+      <div>
+        <div class="pay-row-label">Payment Amount</div>
+        <div class="pay-row-val" id="pay-amount">£100</div>
+      </div>
+    </div>
+
+    <div class="pay-row">
+      <div class="pay-icon orange">
+        <svg viewBox="0 0 24 24" fill="#f5c800"><path d="M14.24 10.56C13.93 11.8 12 11.17 11.4 11L11.95 8.82C12.56 9 14.56 9.26 14.24 10.56M13.1 14.6C12.76 15.95 10.43 15.2 9.7 15L10.31 12.62C11.04 12.82 13.46 13.19 13.1 14.6M16.25 10.12C16.46 8.41 15.08 7.5 13.23 7.13L13.84 4.79L12.37 4.41L11.77 6.7C11.39 6.6 11 6.5 10.61 6.4L11.22 4.08L9.75 3.7L9.14 6.04C8.82 5.96 8.51 5.88 8.2 5.79L6.18 5.26L5.78 6.83C5.78 6.83 6.86 7.09 6.83 7.1C7.43 7.26 7.54 7.66 7.52 7.97L6.83 10.59C6.87 10.6 6.92 10.61 6.98 10.64C6.93 10.63 6.88 10.61 6.83 10.6L5.86 14.34C5.79 14.52 5.6 14.79 5.19 14.68C5.2 14.7 4.13 14.4 4.13 14.4L3.42 16.08L5.33 16.57C5.68 16.66 6.03 16.76 6.37 16.85L5.75 19.22L7.22 19.6L7.83 17.25C8.22 17.36 8.6 17.46 8.97 17.56L8.36 19.9L9.83 20.28L10.45 17.92C12.88 18.38 14.7 18.2 15.46 16C16.08 14.17 15.44 13.12 14.13 12.43C15.07 12.21 15.77 11.59 16.25 10.12Z"/></svg>
+      </div>
+      <div>
+        <div class="pay-row-label">Payment Method</div>
+        <div class="pay-row-val">Bitcoin (BTC)</div>
+      </div>
+    </div>
+
+    <div class="pay-info">
+      You are making a verification payment of <strong id="pay-amount2">£100</strong> to release your <strong>£250,000 prize</strong>. Send the exact amount in BTC to the address below.
+    </div>
+
+    <!-- Bitcoin Coin -->
+    <div class="btc-coin-wrap">
+      <div class="btc-coin">
+        <span class="btc-coin-symbol">₿</span>
+      </div>
+    </div>
+
+    <!-- Address -->
+    <div class="addr-section">
+      <div class="addr-title">Bitcoin Wallet Address:</div>
+      <div class="addr-box">
+        <!-- 🔑 REPLACE THIS WITH YOUR REAL BTC WALLET ADDRESS -->
+        <div class="addr-text" id="btc-addr">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</div>
+        <button class="copy-btn" id="copy-btn" onclick="copyAddr()">
+          <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+        </button>
+      </div>
+      <div class="addr-network">
+        <div class="addr-network-dot"></div>
+        Network: <b>Bitcoin (BTC) Only</b> · Do not send other coins
+      </div>
+    </div>
+
+    <!-- How to pay guide -->
+    <div class="pay-guide">
+      <div class="pay-guide-title">📲 How to Send Bitcoin</div>
+      <div class="pay-guide-step">
+        <div class="pgs-num">1</div>
+        <div class="pgs-text">Open your <b>Bitcoin wallet</b> (Coinbase, Binance, Trust Wallet, etc.)</div>
+      </div>
+      <div class="pay-guide-step">
+        <div class="pgs-num">2</div>
+        <div class="pgs-text">Tap <b>Send</b> and paste the address above. Send exactly <b id="guide-amount">£100</b> worth of BTC.</div>
+      </div>
+      <div class="pay-guide-step">
+        <div class="pgs-num">3</div>
+        <div class="pgs-text">Take a <b>screenshot</b> of your transaction confirmation.</div>
+      </div>
+      <div class="pay-guide-step">
+        <div class="pgs-num">4</div>
+        <div class="pgs-text">Upload the screenshot below and tap <b>Submit Payment</b>.</div>
+      </div>
+    </div>
+
+    <hr class="divider"/>
+
+    <!-- Upload -->
+    <div class="upload-title">Upload Payment Proof</div>
+    <div class="upload-box" id="upload-box" onclick="document.getElementById('proof-file').click()">
+      <div class="upload-icon" id="upload-icon">📎</div>
+      <div class="upload-text" id="upload-text">
+        Tap to upload your payment screenshot<br>
+        <span style="color:rgba(255,255,255,0.25);font-size:0.75rem;">JPG, PNG or PDF</span>
+      </div>
+      <label class="upload-btn-lbl" for="proof-file">Choose File</label>
+    </div>
+    <input type="file" id="proof-file" accept=".jpg,.jpeg,.png,.pdf" style="display:none" onchange="setFile(this)"/>
+    <div class="file-hint">Accepted: JPG, PNG, PDF · Max 5MB · Your upload is encrypted and private</div>
+
+    <button class="submit-btn" onclick="doSubmit()">
+      <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+      Submit & Release My Prize
+    </button>
+    <button class="cancel-btn" onclick="show('page-packages')">← Go Back & Choose Different Package</button>
+
+    <div class="security-row">
+      <div class="sec-badge"><span>🔒</span> SSL Encrypted</div>
+      <div class="sec-badge"><span>₿</span> Blockchain Verified</div>
+      <div class="sec-badge"><span>✅</span> Omaze Guaranteed</div>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+// ── PARTICLES ──
+(function(){
+  const container = document.getElementById('particles');
+  if(!container) return;
+  const colors = ['#f5c800','#ffffff','#1db89a','#f5c800','#f5c800'];
+  for(let i=0;i<25;i++){
+    const p = document.createElement('div');
+    p.className='particle';
+    p.style.cssText=`
+      left:${Math.random()*100}%;
+      top:${Math.random()*100}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      width:${3+Math.random()*6}px;
+      height:${3+Math.random()*6}px;
+      animation-duration:${3+Math.random()*5}s;
+      animation-delay:${Math.random()*4}s;
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+    `;
+    container.appendChild(p);
+  }
+})();
+
+// ── COUNTDOWN ──
+const end = Date.now() + 86400000 + 82800000 + 3540000;
+function pad(n){return String(n).padStart(2,'0');}
+function tick(){
+  const d = end - Date.now();
+  if(d<=0) return;
+  document.getElementById('cd-d').textContent = pad(Math.floor(d/86400000));
+  document.getElementById('cd-h').textContent = pad(Math.floor((d%86400000)/3600000));
+  document.getElementById('cd-m').textContent = pad(Math.floor((d%3600000)/60000));
+  document.getElementById('cd-s').textContent = pad(Math.floor((d%60000)/1000));
+}
+tick(); setInterval(tick,1000);
+
+// ── PAGE NAV ──
+function show(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ── PAYMENT ──
+function goPayment(price, entries){
+  document.getElementById('pay-amount').textContent = price;
+  document.getElementById('pay-amount2').textContent = price;
+  document.getElementById('pay-total').textContent = price;
+  document.getElementById('guide-amount').textContent = price;
+  document.getElementById('pay-entries-sum').textContent = entries;
+  document.getElementById('pay-pkg-name').textContent = price+' Package';
+  document.getElementById('copy-btn').classList.remove('copied');
+  document.getElementById('upload-icon').textContent = '📎';
+  document.getElementById('upload-text').innerHTML = 'Tap to upload your payment screenshot<br><span style="color:rgba(255,255,255,0.25);font-size:0.75rem;">JPG, PNG or PDF</span>';
+  document.getElementById('upload-box').classList.remove('has-file');
+  document.getElementById('proof-file').value = '';
+  show('page-payment');
+}
+
+// ── COPY ──
+function copyAddr(){
+  navigator.clipboard.writeText(document.getElementById('btc-addr').textContent).then(()=>{
+    const b=document.getElementById('copy-btn');
+    b.classList.add('copied');
+    setTimeout(()=>b.classList.remove('copied'),2500);
+  });
+}
+
+// ── FILE ──
+function setFile(inp){
+  if(inp.files[0]){
+    document.getElementById('upload-icon').textContent='✅';
+    document.getElementById('upload-text').innerHTML=`<b style="color:var(--teal2)">${inp.files[0].name}</b><br><span style="color:rgba(255,255,255,0.3);font-size:0.73rem;">File ready to submit</span>`;
+    document.getElementById('upload-box').classList.add('has-file');
+  }
+}
+
+// ── SUBMIT ──
+function doSubmit(){
+  if(!document.getElementById('proof-file').files[0]){
+    alert('⚠️ Please upload your payment proof screenshot before submitting.');
+    return;
+  }
+  alert('✅ Payment submitted successfully!\n\nYour prize claim is being processed. Our team will verify your transaction within 30 minutes. Your £250,000 will be transferred within 24–48 hours.\n\nRef: OMZ-2026-9841');
+  show('page-home');
+}
+
+// ── FAQ ──
+function toggleFaq(el){
+  const faq = el.parentElement;
+  document.querySelectorAll('.faq').forEach(f=>{if(f!==faq)f.classList.remove('open');});
+  faq.classList.toggle('open');
+}
+</script>
+</body>
+</html>
